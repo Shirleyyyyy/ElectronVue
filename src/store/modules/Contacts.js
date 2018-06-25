@@ -2,9 +2,7 @@ import types from '../Types';
 
 export default {
   state: {
-    contacts: [],
-    // chatItems: [],
-    selectChatItemIndex: 0
+    contacts: []
   },
   mutations: {
     [types.ADD_CONTACT]: (state, contact) => {
@@ -36,24 +34,5 @@ export default {
     deleteContact: ({ commit }, contact) => {
       commit(types.DELETE_CONTACT, contact.id);
     }
-
-    // /**
-    //  * 添加或者更新消息项
-    //  */
-    // updateChatItem: ({ commit, state }, contact) => {
-    //   commit(types.UPDATE_CHATITEM, contact);
-    // },
-    // /**
-    //  * 改变当前选中的消息项
-    //  */
-    // changeCurrentChatItemIndex: ({ commit }, index) => {
-    //   commit(types.CHANGE_CURRENT_CHATEITEM_INDEX, index);
-    // },
-    // /**
-    //  * 删除消息项
-    //  */
-    // deleteChatItem: ({ commit }, index) => {
-    //   commit(types.DELETE_CHATITEM, index);
-    // }
   }
 };

@@ -10,7 +10,8 @@ export default {
     messages: {
       haha: [1, 2]
     },
-    chatItems: []
+    chatItems: [],
+    selectChatItemIndex: 0
   },
   mutations: {
     [types.SEND_MESSAGE]: (state, msg) => {

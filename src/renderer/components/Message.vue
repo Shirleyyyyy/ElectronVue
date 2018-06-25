@@ -23,7 +23,8 @@ import { mapState } from 'vuex';
 export default {
   data() {
     return {
-      inputValue: ''
+      inputValue: '',
+      messages: []
     };
   },
   computed: {
@@ -34,14 +35,14 @@ export default {
       return this.$store.state.message.chatItems;
     },
     currentChatItemIndex() {
-      return this.$store.state.contact.selectChatItemIndex;
+      return this.$store.state.message.selectChatItemIndex;
     },
-    messages() {
-      let userId = this.$store.state.message.user.id;
-      let currentIndex = this.$store.state.contact.selectChatItemIndex;
-      let herId = this.chatItems[currentIndex].id;
-      let key = [userId, herId].sort().join(',');
-      return this.$store.state.message.messages[key];
+    messagess() {
+      // let userId = this.$store.state.message.user.id;
+      // let currentIndex = this.$store.state.message.selectChatItemIndex;
+      // let herId = this.chatItems[currentIndex].id;
+      // let key = [userId, herId].sort().join(',');
+      // return this.$store.state.message.messages[key];
     },
     ...mapState({
       allMessages(state) {
@@ -52,23 +53,13 @@ export default {
   watch: {
     allMessages: {
       handler: function(val, oldVal) {
-        // let userId = this.$store.state.message.user.id;
-        // let currentIndex = this.$store.state.contact.selectChatItemIndex;
-        // let herId = this.chatItems[currentIndex].id;
-        // let key = [userId, herId].sort().join(',');
-        // if (!this.$store.state.message.messages.hasOwnProperty(key)) {
-        //   return;
-        // }
-        // this.messages = this.$store.state.message.messages[key];
+        this.onUpdateMsg();
       },
       deep: true
+    },
+    currentChatItemIndex: function() {
+      this.onUpdateMsg();
     }
-    // message: {
-    //   handler: function(val, oldVal) {
-    //     console.log(val, oldVal);
-    //   },
-    //   deep: true
-    // },
   },
   methods: {
     onChangCurrentChatIten(e, index) {
@@ -103,6 +94,16 @@ export default {
         content: this.inputValue
       });
       this.inputValue = '';
+    },
+    onUpdateMsg() {
+      let userId = this.$store.state.message.user.id;
+      let currentIndex = this.$store.state.message.selectChatItemIndex;
+      let herId = this.chatItems[currentIndex].id;
+      let key = [userId, herId].sort().join(',');
+      if (!this.$store.state.message.messages.hasOwnProperty(key)) {
+        return;
+      }
+      this.messages = this.$store.state.message.messages[key];
     }
   }
 };
