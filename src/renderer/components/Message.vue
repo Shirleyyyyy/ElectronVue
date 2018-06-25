@@ -9,7 +9,7 @@
             <div class="content-title">{{chatItems.length > 0 ? chatItems[currentChatItemIndex].name : '' }}</div>
             <div class="content-msg">
                 <div v-for="(msg, index) in messages" :key="index">
-                    <div>{{msg.content}}</div>
+                    <div :class="[ msg.from === user.id ? 'content-me' : 'content-you']">{{msg.content}}</div>
                 </div>
             </div>
             <textarea class="content-input" v-model="inputValue" placeholder="请输入消息, 以Enter结束" @keypress="onSendMsg"/>
@@ -27,6 +27,9 @@ export default {
     };
   },
   computed: {
+    user() {
+      return this.$store.state.message.user;
+    },
     chatItems() {
       return this.$store.state.message.chatItems;
     },
@@ -141,7 +144,8 @@ export default {
 }
 
 .content-wrapper {
-  flex: 1;
+  width: 400px;
+  height: 400px;
   display: flex;
   flex-direction: column;
 }
@@ -155,10 +159,28 @@ export default {
 }
 
 .content-msg {
-  flex: 1;
+  height: 300px;
 }
 
 .content-input {
   height: 60px;
+}
+
+.content-me {
+  display: flex;
+  justify-content: flex-end;
+  background: #f5f5f5;
+  max-width: 400px;
+  border-radius: 3px;
+  padding: 5px 10px;
+  margin-top: 10px;
+}
+
+.content-you {
+  background: #a4cdf7;
+  max-width: 400px;
+  border-radius: 3px;
+  padding: 5px 10px;
+  margin-top: 10px;
 }
 </style>
