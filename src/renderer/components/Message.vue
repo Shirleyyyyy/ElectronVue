@@ -8,7 +8,6 @@
         <div class="content-wrapper">
             <div class="content-title">{{chatItems.length > 0 ? chatItems[currentChatItemIndex].name : '' }}</div>
             <div class="content-msg">
-                {{messages && messages.length}}
                 <div v-for="(msg, index) in messages" :key="index">
                     <div>{{msg.content}}</div>
                 </div>
@@ -34,40 +33,39 @@ export default {
     currentChatItemIndex() {
       return this.$store.state.contact.selectChatItemIndex;
     },
-    allMessages() {
+    messages() {
       let userId = this.$store.state.message.user.id;
       let currentIndex = this.$store.state.contact.selectChatItemIndex;
       let herId = this.chatItems[currentIndex].id;
       let key = [userId, herId].sort().join(',');
       return this.$store.state.message.messages[key];
-      // return this.$store.state.message.messages;
     },
     ...mapState({
-      messages(state) {
+      allMessages(state) {
         return state.message.messages;
       }
     })
   },
   watch: {
-    messages: {
-      handler: function(val, oldVal) {
-        let userId = this.$store.state.message.user.id;
-        let currentIndex = this.$store.state.contact.selectChatItemIndex;
-        let herId = this.chatItems[currentIndex].id;
-        let key = [userId, herId].sort().join(',');
-        if (!this.$store.state.message.messages.hasOwnProperty(key)) {
-          return;
-        }
-        this.messages = this.$store.state.message.messages[key];
-      },
-      deep: true
-    },
     allMessages: {
-      handler: function (val, oldVal) {
-        console.log(val, oldVal);
+      handler: function(val, oldVal) {
+        // let userId = this.$store.state.message.user.id;
+        // let currentIndex = this.$store.state.contact.selectChatItemIndex;
+        // let herId = this.chatItems[currentIndex].id;
+        // let key = [userId, herId].sort().join(',');
+        // if (!this.$store.state.message.messages.hasOwnProperty(key)) {
+        //   return;
+        // }
+        // this.messages = this.$store.state.message.messages[key];
       },
       deep: true
     }
+    // message: {
+    //   handler: function(val, oldVal) {
+    //     console.log(val, oldVal);
+    //   },
+    //   deep: true
+    // },
   },
   methods: {
     onChangCurrentChatIten(e, index) {

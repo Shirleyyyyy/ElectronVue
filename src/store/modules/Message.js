@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import types from '../Types';
 
 export default {
@@ -15,18 +16,16 @@ export default {
     [types.SEND_MESSAGE]: (state, msg) => {
       let key = [msg.from, msg.to].sort().join(',');
       if (!state.messages.hasOwnProperty(key)) {
-        state.messages[key] = [];
+        Vue.set(state.messages, key, []);
       }
-      // state.messages[key].push(msg);
-      state.messages[key].splice(state.messages[key].length, 0, msg);
+      state.messages[key].push(msg);
     },
     [types.RECEIVE_MESSAGE]: (state, msg) => {
       let key = [msg.from, msg.to].sort().join(',');
       if (!state.messages.hasOwnProperty(key)) {
-        state.messages[key] = [];
+        Vue.set(state.messages, key, []);
       }
-      // state.messages[key].push(msg);
-      state.messages[key].splice(state.messages[key].length, 0, msg);
+      state.messages[key].push(msg);
     },
 
     [types.UPDATE_CHATITEM]: (state, chatItem) => {
@@ -44,11 +43,6 @@ export default {
         };
         state.chatItems.unshift(temp);
         state.selectChatItemIndex = 0;
-
-        let key = [chatItem.id, state.user.id].sort().join(',');
-        if (!state.messages.hasOwnProperty(key)) {
-          state.messages[key] = [];
-        }
       }
     },
     [types.CHANGE_CURRENT_CHATEITEM_INDEX]: (state, index) => {
